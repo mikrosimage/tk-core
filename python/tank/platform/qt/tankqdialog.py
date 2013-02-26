@@ -62,7 +62,7 @@ class TankMainForm(QtGui.QWidget):
     """
     
     # signal emitted when the contained widget is closed
-    widget_closed = QtCore.Signal(QtGui.QDialog.DialogCode)
+    widget_closed = QtCore.Signal(int)
 
     def __init__(self, title, bundle, widget, parent):
         """
