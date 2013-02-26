@@ -23,6 +23,14 @@ class TankQDialog(TankDialogBase):
     in addition to the user object that it is hosting.
     """
 
+    @property
+    def ignore_escape_key(self):
+        return self.__ignore_escape_key
+
+    @ignore_escape_key.setter
+    def ignore_escape_key(self, value):
+        self.__ignore_escape_key = value
+
     def __init__(self, title, bundle, widget, parent):
         """
         Constructor
@@ -31,9 +39,10 @@ class TankQDialog(TankDialogBase):
         
         # indicates that we are showing the info pane
         self._info_mode = False
-        self._bundle = bundle
         
+        self._bundle = bundle
         self._config_items = []
+        self.__ignore_escape_key = False
         
         ########################################################################################
         # set up the main UI and header
@@ -88,7 +97,6 @@ class TankQDialog(TankDialogBase):
         
         widget.closeEvent = lambda event: self._handle_child_close(event)
         
-        
         ########################################################################################
         # now setup the info page with all the details
         
@@ -128,6 +136,17 @@ class TankQDialog(TankDialogBase):
             self._add_settings_item(setting, params, value)
         
         
+    def keyPressEvent(self, event):
+        """
+        Normally, hitting the escape key would 'reject' the dialog.  
+        Setting __ignore_escape_key allows this behaviour to be disabled.
+        """
+        if self.__ignore_escape_key and event.key() == QtCore.Qt.Key_Escape:
+            pass
+        else:
+            # call base
+            TankDialogBase.keyPressEvent(self, event)
+       
     def _handle_child_close(self, event):
         """
         Callback from the hosted widget's closeEvent.
