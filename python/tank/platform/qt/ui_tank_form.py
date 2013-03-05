@@ -1,23 +1,23 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'tank_dialog.ui'
+# Form implementation generated from reading ui file 'tank_form.ui'
 #
-# Created: Mon Mar  4 14:32:23 2013
+# Created: Tue Mar  5 19:17:35 2013
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
 
 from . import QtCore, QtGui
 
-class Ui_TankDialog(object):
-    def setupUi(self, TankDialog):
-        TankDialog.setObjectName("TankDialog")
-        TankDialog.resize(785, 492)
-        self.verticalLayout_3 = QtGui.QVBoxLayout(TankDialog)
+class Ui_TankForm(object):
+    def setupUi(self, TankForm):
+        TankForm.setObjectName("TankForm")
+        TankForm.resize(483, 363)
+        self.verticalLayout_3 = QtGui.QVBoxLayout(TankForm)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.stackedWidget = QtGui.QStackedWidget(TankDialog)
+        self.stackedWidget = QtGui.QStackedWidget(TankForm)
         self.stackedWidget.setObjectName("stackedWidget")
         self.page_1 = QtGui.QWidget()
         self.page_1.setStyleSheet("")
@@ -254,7 +254,7 @@ class Ui_TankDialog(object):
         self.page2_scroll.setWidgetResizable(True)
         self.page2_scroll.setObjectName("page2_scroll")
         self.page2_scrollcontents = QtGui.QWidget()
-        self.page2_scrollcontents.setGeometry(QtCore.QRect(0, 0, 359, 465))
+        self.page2_scrollcontents.setGeometry(QtCore.QRect(0, 0, 335, 59))
         self.page2_scrollcontents.setObjectName("page2_scrollcontents")
         self.verticalLayout_5 = QtGui.QVBoxLayout(self.page2_scrollcontents)
         self.verticalLayout_5.setSpacing(4)
@@ -286,32 +286,32 @@ class Ui_TankDialog(object):
         self.stackedWidget.addWidget(self.page_2)
         self.verticalLayout_3.addWidget(self.stackedWidget)
 
-        self.retranslateUi(TankDialog)
+        self.retranslateUi(TankForm)
         self.stackedWidget.setCurrentIndex(0)
         self.tabWidget.setCurrentIndex(0)
-        QtCore.QMetaObject.connectSlotsByName(TankDialog)
+        QtCore.QMetaObject.connectSlotsByName(TankForm)
 
-    def retranslateUi(self, TankDialog):
-        TankDialog.setWindowTitle(QtGui.QApplication.translate("TankDialog", "Dialog", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("TankDialog", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
-        self.lbl_context.setToolTip(QtGui.QApplication.translate("TankDialog", "foo bar", None, QtGui.QApplication.UnicodeUTF8))
-        self.lbl_context.setText(QtGui.QApplication.translate("TankDialog", "Current Work Area:\n"
+    def retranslateUi(self, TankForm):
+        TankForm.setWindowTitle(QtGui.QApplication.translate("TankForm", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("TankForm", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
+        self.lbl_context.setToolTip(QtGui.QApplication.translate("TankForm", "foo bar", None, QtGui.QApplication.UnicodeUTF8))
+        self.lbl_context.setText(QtGui.QApplication.translate("TankForm", "Current Work Area:\n"
 "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
-        self.details.setToolTip(QtGui.QApplication.translate("TankDialog", "Click for Tank App Details", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("TankDialog", "General Information", None, QtGui.QApplication.UnicodeUTF8))
-        self.app_name.setText(QtGui.QApplication.translate("TankDialog", "Publish And Snapshot", None, QtGui.QApplication.UnicodeUTF8))
-        self.app_description.setText(QtGui.QApplication.translate("TankDialog", "Tools to see what is out of date in your scene etc etc.", None, QtGui.QApplication.UnicodeUTF8))
-        self.app_tech_details.setText(QtGui.QApplication.translate("TankDialog", "tk-multi-snapshot, v1.2.3", None, QtGui.QApplication.UnicodeUTF8))
-        self.btn_documentation.setText(QtGui.QApplication.translate("TankDialog", "Documentation", None, QtGui.QApplication.UnicodeUTF8))
-        self.btn_support.setText(QtGui.QApplication.translate("TankDialog", "Help && Support", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("TankDialog", "Your Current Work Area", None, QtGui.QApplication.UnicodeUTF8))
-        self.app_work_area_info.setText(QtGui.QApplication.translate("TankDialog", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
-        self.btn_file_system.setText(QtGui.QApplication.translate("TankDialog", "Jump to File System", None, QtGui.QApplication.UnicodeUTF8))
-        self.btn_shotgun.setText(QtGui.QApplication.translate("TankDialog", "Jump to Shotgun", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("TankDialog", "General Information", None, QtGui.QApplication.UnicodeUTF8))
-        self.btn_reload.setText(QtGui.QApplication.translate("TankDialog", "Reload Engine and Apps", None, QtGui.QApplication.UnicodeUTF8))
-        self.btn_edit_config.setText(QtGui.QApplication.translate("TankDialog", "Edit Configuration", None, QtGui.QApplication.UnicodeUTF8))
-        self.btn_add_parameter.setText(QtGui.QApplication.translate("TankDialog", "+", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("TankDialog", "Configuration", None, QtGui.QApplication.UnicodeUTF8))
+        self.details.setToolTip(QtGui.QApplication.translate("TankForm", "Click for Tank App Details", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_6.setText(QtGui.QApplication.translate("TankForm", "General Information", None, QtGui.QApplication.UnicodeUTF8))
+        self.app_name.setText(QtGui.QApplication.translate("TankForm", "Publish And Snapshot", None, QtGui.QApplication.UnicodeUTF8))
+        self.app_description.setText(QtGui.QApplication.translate("TankForm", "Tools to see what is out of date in your scene etc etc.", None, QtGui.QApplication.UnicodeUTF8))
+        self.app_tech_details.setText(QtGui.QApplication.translate("TankForm", "tk-multi-snapshot, v1.2.3", None, QtGui.QApplication.UnicodeUTF8))
+        self.btn_documentation.setText(QtGui.QApplication.translate("TankForm", "Documentation", None, QtGui.QApplication.UnicodeUTF8))
+        self.btn_support.setText(QtGui.QApplication.translate("TankForm", "Help && Support", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_5.setText(QtGui.QApplication.translate("TankForm", "Your Current Work Area", None, QtGui.QApplication.UnicodeUTF8))
+        self.app_work_area_info.setText(QtGui.QApplication.translate("TankForm", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
+        self.btn_file_system.setText(QtGui.QApplication.translate("TankForm", "Jump to File System", None, QtGui.QApplication.UnicodeUTF8))
+        self.btn_shotgun.setText(QtGui.QApplication.translate("TankForm", "Jump to Shotgun", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("TankForm", "General Information", None, QtGui.QApplication.UnicodeUTF8))
+        self.btn_reload.setText(QtGui.QApplication.translate("TankForm", "Reload Engine and Apps", None, QtGui.QApplication.UnicodeUTF8))
+        self.btn_edit_config.setText(QtGui.QApplication.translate("TankForm", "Edit Configuration", None, QtGui.QApplication.UnicodeUTF8))
+        self.btn_add_parameter.setText(QtGui.QApplication.translate("TankForm", "+", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("TankForm", "Configuration", None, QtGui.QApplication.UnicodeUTF8))
 
 from . import resources_rc
