@@ -18,11 +18,20 @@ import os
 TANK_TOOLBAR_HEIGHT = 45
 
 class TankQDialog(TankDialogBase):
+    """
+    Base tank dialog that wraps around app widgets. Contains a
+    single instance of the TankMainForm widget that in turn hosts
+    the app widget
+    """
     
+    """
+    Control if the escape key should be ignored or handled
+    by the dialog - the default behaviour is to close the
+    dialog when the user presses ESC
+    """
     @property
     def ignore_escape_key(self):
         return self.__ignore_escape_key
-
     @ignore_escape_key.setter
     def ignore_escape_key(self, value):
         self.__ignore_escape_key = value
@@ -77,6 +86,7 @@ class TankMainForm(QtGui.QWidget):
     in addition to the user object that it is hosting.
     """
     
+    # signal emitted when the contained widget is closed
     widget_closed = QtCore.Signal(QtGui.QDialog.DialogCode)
 
     def __init__(self, title, bundle, widget, parent):
@@ -196,24 +206,6 @@ class TankMainForm(QtGui.QWidget):
         # use accepted as the default exit code
         exit_code = QtGui.QDialog.Accepted    
 
-        # look if the hosted widget has an exit_code we should pick up
-        if hasattr(self._widget, "exit_code"):
-            exit_code = self._widget.exit_code
-        
-        self.widget_closed.emit(exit_code)
-         
-   
-    def _handle_child_close(self, event):
-        """
-        Callback from the hosted widget's closeEvent.
-        Make sure that when a close() is issued for the hosted widget,
-        the parent widget is closed too.
-        """
-        # ACK the event to tell QT to proceed with the close 
-        event.accept()
-        
-        # use accepted as the default exit code
-        exit_code = QtGui.QDialog.Accepted    
         # look if the hosted widget has an exit_code we should pick up
         if hasattr(self._widget, "exit_code"):
             exit_code = self._widget.exit_code
