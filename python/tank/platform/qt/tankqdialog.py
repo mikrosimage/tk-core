@@ -7,6 +7,7 @@ Default implementation for the Tank Dialog
 """
 
 from . import QtCore, QtGui
+from . import ui_tank_form
 from . import ui_tank_dialog
 from . import TankDialogBase
 from .config_item import ConfigItem
@@ -18,11 +19,7 @@ import os
 TANK_TOOLBAR_HEIGHT = 45
 
 class TankQDialog(TankDialogBase):
-    """
-    Wraps around app widgets. Contains Tank specific toolbars and configuration info
-    in addition to the user object that it is hosting.
-    """
-
+    
     @property
     def ignore_escape_key(self):
         return self.__ignore_escape_key
@@ -30,27 +27,81 @@ class TankQDialog(TankDialogBase):
     @ignore_escape_key.setter
     def ignore_escape_key(self, value):
         self.__ignore_escape_key = value
-
+    
     def __init__(self, title, bundle, widget, parent):
         """
         Constructor
         """
         TankDialogBase.__init__(self, parent)
+
+        self.__ignore_escape_key = False
+        
+        # create main form - this is the container for everything else:
+        self._main_form = TankMainForm(title, bundle, widget, self)
+        
+        # watch for the widget being closed:
+        self._main_form.widget_closed.connect(self._on_widget_closed)
+        
+        # create and set layout for dialog:
+        layout = QtGui.QVBoxLayout()
+        layout.addWidget(self._main_form)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
+        self.setLayout(layout)
+        
+        self.setWindowTitle("Tank: %s" % title)
+        
+        # adjust size of the outer window to match the hosted widget size
+        self.resize(widget.width(), widget.height() + TANK_TOOLBAR_HEIGHT)
+        
+    def _on_widget_closed(self, exit_code):
+        """
+        Called when the widget is closed to ensure this window also closes
+        """
+        # close QDialog
+        self.done(exit_code)
+        
+    def keyPressEvent(self, event):
+        """
+        Normally, hitting the escape key would 'reject' the dialog.  
+        Setting __ignore_escape_key allows this behaviour to be disabled.
+        """
+        if self.__ignore_escape_key and event.key() == QtCore.Qt.Key_Escape:
+            pass
+        else:
+            # call base
+            TankDialogBase.keyPressEvent(self, event)
+
+class TankMainForm(QtGui.QWidget):
+    """
+    Wraps around app widgets. Contains Tank specific toolbars and configuration info
+    in addition to the user object that it is hosting.
+    """
+    
+    widget_closed = QtCore.Signal(QtGui.QDialog.DialogCode)
+
+    def __init__(self, title, bundle, widget, parent):
+        """
+        Constructor
+        """
+        QtGui.QWidget.__init__(self, parent)
         
         # indicates that we are showing the info pane
         self._info_mode = False
         
         self._bundle = bundle
         self._config_items = []
-        self.__ignore_escape_key = False
+        
+        # keep track of the widget
+        self._widget = widget
         
         ########################################################################################
         # set up the main UI and header
         
-        self.ui = ui_tank_dialog.Ui_TankDialog() 
+        self.ui = ui_tank_form.Ui_TankForm() 
         self.ui.setupUi(self)
         self.ui.label.setText(title)
-        self.setWindowTitle("Tank: %s" % title)
+        #self.setWindowTitle("Tank: %s" % title)
         
         self.ui.tank_logo.setToolTip("This is part of the Tank App %s" % self._bundle.name)
         self.ui.label.setToolTip("This is part of the Tank App %s" % self._bundle.name)
@@ -84,18 +135,6 @@ class TankQDialog(TankDialogBase):
         
         widget.setParent(self.ui.page_1)
         self.ui.target.insertWidget(0, widget)
-        # keep track of the widget
-        self._widget = widget
-        
-        # adjust size of the outer window to match the hosted widget size
-        self.resize(widget.width(), widget.height() + TANK_TOOLBAR_HEIGHT)
-        
-        ########################################################################################
-        # intercept the close event of the child widget
-        # so that when the close event is emitted from the hosted widget,
-        # we make sure to clo
-        
-        widget.closeEvent = lambda event: self._handle_child_close(event)
         
         ########################################################################################
         # now setup the info page with all the details
@@ -134,19 +173,37 @@ class TankQDialog(TankDialogBase):
         for setting, params in self._bundle.descriptor.get_configuration_schema().items():        
             value = self._bundle.settings.get(setting)
             self._add_settings_item(setting, params, value)
+            
+        ########################################################################################
+        # intercept the close event of the child widget
+        # so that when the close event is emitted from the hosted widget,
+        # we make sure to close the dialog
+        widget.closeEvent = lambda event, dh=widget.closeEvent: self._handle_widget_close(event, dh)
         
-        
-    def keyPressEvent(self, event):
+    def _handle_widget_close(self, event, default_handler):
         """
-        Normally, hitting the escape key would 'reject' the dialog.  
-        Setting __ignore_escape_key allows this behaviour to be disabled.
+        Callback from the hosted widget's closeEvent.
+        Make sure that when a close() is issued for the hosted widget,
+        the parent widget is closed too.
         """
-        if self.__ignore_escape_key and event.key() == QtCore.Qt.Key_Escape:
-            pass
+        # execute default handler and stop if not accepted:
+        if default_handler:
+            default_handler(event)
+            if not event.isAccepted():
+                return
         else:
-            # call base
-            TankDialogBase.keyPressEvent(self, event)
-       
+            event.accept()
+        
+        # use accepted as the default exit code
+        exit_code = QtGui.QDialog.Accepted    
+
+        # look if the hosted widget has an exit_code we should pick up
+        if hasattr(self._widget, "exit_code"):
+            exit_code = self._widget.exit_code
+        
+        self.widget_closed.emit(exit_code)
+         
+   
     def _handle_child_close(self, event):
         """
         Callback from the hosted widget's closeEvent.
@@ -162,9 +219,8 @@ class TankQDialog(TankDialogBase):
         if hasattr(self._widget, "exit_code"):
             exit_code = self._widget.exit_code
         
-        # close QDialog
-        self.done(exit_code)
-        
+        self.widget_closed.emit(exit_code)
+       
     def _on_arrow(self):
         """
         callback when someone clicks the 'details' > arrow icon
