@@ -8,7 +8,6 @@ Default implementation for the Tank Dialog
 
 from . import QtCore, QtGui
 from . import ui_tank_form
-from . import ui_tank_dialog
 from . import TankDialogBase
 from .config_item import ConfigItem
 from .. import engine
