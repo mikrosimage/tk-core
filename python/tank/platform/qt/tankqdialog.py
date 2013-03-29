@@ -72,8 +72,8 @@ class TankMainForm(QtGui.QWidget):
         
         # indicates that we are showing the info pane
         self._info_mode = False
-        
         self._bundle = bundle
+
         self._config_items = []
         
         # keep track of the widget
@@ -85,7 +85,6 @@ class TankMainForm(QtGui.QWidget):
         self.ui = ui_tank_form.Ui_TankForm() 
         self.ui.setupUi(self)
         self.ui.label.setText(title)
-        #self.setWindowTitle("Tank: %s" % title)
         
         self.ui.tank_logo.setToolTip("This is part of the Tank App %s" % self._bundle.name)
         self.ui.label.setToolTip("This is part of the Tank App %s" % self._bundle.name)
