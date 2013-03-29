@@ -4,7 +4,6 @@
 # ----------------------------------------------------
 
 echo "building user interfaces..."
-pyside-uic --from-imports tank_dialog.ui > ./ui_tank_dialog.py
 pyside-uic --from-imports tank_form.ui > ./ui_tank_form.py
 pyside-uic --from-imports item.ui > ./ui_item.py
 
