@@ -340,9 +340,6 @@ class Engine(TankBundle):
         parent = QtGui.QApplication.activeWindow()
         dialog = tankqdialog.TankQDialog(title, bundle, obj, parent)
         
-        # for modeless dialogs we don't want escape key to close them!
-        dialog.ignore_escape_key = True
-        
         # keep a reference to all created dialogs to make GC happy
         self.__created_qt_dialogs.append(dialog)
         
