@@ -24,25 +24,11 @@ class TankQDialog(TankDialogBase):
     the app widget
     """
     
-    """
-    Control if the escape key should be ignored or handled
-    by the dialog - the default behaviour is to close the
-    dialog when the user presses ESC
-    """
-    @property
-    def ignore_escape_key(self):
-        return self.__ignore_escape_key
-    @ignore_escape_key.setter
-    def ignore_escape_key(self, value):
-        self.__ignore_escape_key = value
-    
     def __init__(self, title, bundle, widget, parent):
         """
         Constructor
         """
         TankDialogBase.__init__(self, parent)
-
-        self.__ignore_escape_key = False
         
         # create main form - this is the container for everything else:
         self._main_form = TankMainForm(title, bundle, widget, self)
@@ -69,17 +55,6 @@ class TankQDialog(TankDialogBase):
         # close QDialog
         self.done(exit_code)
         
-    def keyPressEvent(self, event):
-        """
-        Normally, hitting the escape key would 'reject' the dialog.  
-        Setting __ignore_escape_key allows this behaviour to be disabled.
-        """
-        if self.__ignore_escape_key and event.key() == QtCore.Qt.Key_Escape:
-            pass
-        else:
-            # call base
-            TankDialogBase.keyPressEvent(self, event)
-
 class TankMainForm(QtGui.QWidget):
     """
     Wraps around app widgets. Contains Tank specific toolbars and configuration info
