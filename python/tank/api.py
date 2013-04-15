@@ -17,6 +17,7 @@ from . import context
 from . import root
 from .util import shotgun
 from .errors import TankError
+from .folder.folder_io import folder_preflight_checks
 from .path_cache import PathCache
 from .template import read_templates, TemplatePath
 from .platform import constants as platform_constants
@@ -386,7 +387,7 @@ class Tank(object):
         hook_path = _get_hook_path(hook_name, self.project_path)
         return hook.execute_hook(hook_path, self, **kwargs)
 
-    
+        
 
 ##########################################################################################
 # module methods
